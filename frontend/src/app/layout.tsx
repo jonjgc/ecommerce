@@ -1,4 +1,5 @@
 import StyledComponentsRegistry from '@/lib/registry'
+import { Providers } from './providers'
 
 export const metadata = {
   title: 'Ecommerce',
@@ -13,7 +14,9 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <StyledComponentsRegistry>
+          <Providers>{children}</Providers>
+        </StyledComponentsRegistry>
       </body>
     </html>
   )

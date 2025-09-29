@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { MailerModule } from '@nestjs-modules/mailer';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
@@ -34,6 +35,27 @@ import { CacheModule } from '@nestjs/cache-manager';
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: false,
+    }),
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        transport: {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          host: configService.get('MAIL_HOST'),
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          port: configService.get('MAIL_PORT'),
+          auth: {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            user: configService.get('MAIL_USER'),
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            pass: configService.get('MAIL_PASS'),
+          },
+        },
+        defaults: {
+          from: `"Loja Online" <${configService.get('MAIL_FROM')}>`,
+        },
+      }),
     }),
     UsersModule,
     AuthModule,

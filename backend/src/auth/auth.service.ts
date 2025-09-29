@@ -33,7 +33,13 @@ export class AuthService {
     return { message: 'Conta ativada com sucesso!' };
   }
 
-  async login(email: string, pass: string): Promise<{ accessToken: string }> {
+  async login(
+    email: string,
+    pass: string,
+  ): Promise<{
+    user: Omit<User, 'password' | 'confirmationToken'>;
+    token: string;
+  }> {
     const user = await this.usersRepository.findOneBy({ email });
 
     if (!user) {
@@ -52,9 +58,14 @@ export class AuthService {
       throw new UnauthorizedException('Credenciais inválidas.');
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, confirmationToken, ...userResult } = user;
+
     const payload = { sub: user.id, email: user.email, isAdmin: user.isAdmin };
+
     return {
-      accessToken: await this.jwtService.signAsync(payload),
+      user: userResult,
+      token: await this.jwtService.signAsync(payload), // Renomeado de 'accessToken' para 'token'
     };
   }
 }

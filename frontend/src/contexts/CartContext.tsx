@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useMemo } from 'react';
 import { IProduct } from '@/types/product';
 import toast from 'react-hot-toast';
 
@@ -11,8 +11,10 @@ interface ICartItem extends IProduct {
 interface ICartContextData {
   items: ICartItem[];
   totalItems: number;
+  totalPrice: number;
   addToCart: (product: IProduct) => void;
   removeFromCart: (productId: string) => void;
+  updateItemQuantity: (productId: string, quantity: number) => void;
 }
 
 const CartContext = createContext({} as ICartContextData);
@@ -20,7 +22,13 @@ const CartContext = createContext({} as ICartContextData);
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<ICartItem[]>([]);
 
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = useMemo(() => {
+    return items.reduce((sum, item) => sum + item.quantity, 0);
+  }, [items]);
+
+  const totalPrice = useMemo(() => {
+    return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  }, [items]);
 
   const addToCart = (product: IProduct) => {
     setItems((prevItems) => {
@@ -38,13 +46,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
     toast.success(`${product.name} adicionado ao carrinho!`);
   };
+  
+  const updateItemQuantity = (productId: string, quantity: number) => {
+    setItems(prevItems => {
+        if (quantity <= 0) {
+            return prevItems.filter(item => item.id !== productId);
+        }
+        return prevItems.map(item => item.id === productId ? {...item, quantity} : item);
+    })
+  }
 
   const removeFromCart = (productId: string) => {
     setItems((prevItems) => prevItems.filter((item) => item.id !== productId));
   };
 
   return (
-    <CartContext.Provider value={{ items, totalItems, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ items, totalItems, totalPrice, addToCart, removeFromCart, updateItemQuantity }}>
       {children}
     </CartContext.Provider>
   );

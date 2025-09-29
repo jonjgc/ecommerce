@@ -1,16 +1,17 @@
 'use client';
 
 import { Header } from '../Header';
+import { CartSidebar } from '../CartSidebar';
+import { useState } from 'react';
 import * as S from './styles';
 
-type LayoutProps = {
-  children: React.ReactNode;
-};
+export const Layout = ({ children }: { children: React.ReactNode }) => {
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
-export const Layout = ({ children }: LayoutProps) => {
   return (
     <S.Wrapper>
-      <Header />
+      <Header onCartClick={() => setIsCartOpen(true)} />
+      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       <S.Main>{children}</S.Main>
     </S.Wrapper>
   );

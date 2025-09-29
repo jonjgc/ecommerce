@@ -12,3 +12,10 @@ export const LoadingMessage = styled.p`
   text-align: center;
   padding: 4rem;
 `;
+
+export const PageHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: ${({ theme }) => theme.spacing.large};
+`;

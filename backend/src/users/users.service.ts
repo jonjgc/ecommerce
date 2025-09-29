@@ -14,11 +14,16 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<Omit<User, 'password'>> {
-    const { email, name } = createUserDto;
+    const { email, name, cpf } = createUserDto;
 
     const userExists = await this.usersRepository.findOneBy({ email });
     if (userExists) {
       throw new ConflictException('Este endereço de email já está em uso.');
+    }
+
+    const cpfExists = await this.usersRepository.findOneBy({ cpf });
+    if (cpfExists) {
+      throw new ConflictException('Este CPF já está em uso.');
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
@@ -27,6 +32,7 @@ export class UsersService {
     const newUser = this.usersRepository.create({
       name,
       email,
+      cpf,
       password: hashedPassword,
       isActive: false,
       confirmationToken,

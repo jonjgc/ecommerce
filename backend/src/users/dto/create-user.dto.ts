@@ -9,6 +9,10 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
+  @IsNotEmpty({ message: 'O CPF não pode ser vazio.' })
+  cpf: string;
+
+  @IsString()
   @MinLength(6, { message: 'A senha deve ter no mínimo 6 caracteres.' })
   password: string;
 }

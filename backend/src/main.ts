@@ -9,7 +9,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Loja Online API')
-    .setDescription('Documentação da API para o desafio de uma loja online')
+    .setDescription('Documentação da API')
     .setVersion('1.0')
     .addBearerAuth()
     .build();

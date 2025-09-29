@@ -1,45 +1,50 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, ILike, Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import * as cacheManager from 'cache-manager';
+import { QueryProductDto } from './dto/query-product.dto';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private productsRepository: Repository<Product>,
-    @Inject(CACHE_MANAGER) private cacheManager: cacheManager.Cache,
   ) {}
 
   async create(createProductDto: CreateProductDto) {
     const newProduct = this.productsRepository.create(createProductDto);
-    const savedProduct = await this.productsRepository.save(newProduct);
-    await this.clearProductsCache();
-    return savedProduct;
+    return this.productsRepository.save(newProduct);
   }
 
-  async findAll() {
-    const cacheKey = 'all_products';
+  async findAll(query: QueryProductDto) {
+    const { page = 1, limit = 10, name } = query;
 
-    const cachedProducts = await this.cacheManager.get<Product[]>(cacheKey);
-    if (cachedProducts) {
-      return cachedProducts;
+    console.log('--- BUSCANDO DADOS DO BANCO (PostgreSQL) ---');
+
+    const skip = (page - 1) * limit;
+    const where: FindOptionsWhere<Product> = {};
+    if (name) {
+      where.name = ILike(`%${name}%`);
     }
 
-    const products = await this.productsRepository.find();
+    const [products, total] = await this.productsRepository.findAndCount({
+      where,
+      take: limit,
+      skip: skip,
+    });
 
-    const plainProducts = JSON.parse(JSON.stringify(products)) as Product[];
-
-    await this.cacheManager.set(cacheKey, plainProducts, 20000);
-
-    return products;
-  }
-  private async clearProductsCache() {
-    await this.cacheManager.del('all_products');
+    const totalPages = Math.ceil(total / limit);
+    return {
+      data: products,
+      meta: {
+        totalItems: total,
+        totalPages: totalPages,
+        currentPage: page,
+        itemsPerPage: limit,
+      },
+    };
   }
 
   async findOne(id: string) {
@@ -58,14 +63,11 @@ export class ProductsService {
     if (!product) {
       throw new NotFoundException(`Produto com ID "${id}" não encontrado.`);
     }
-    const updatedProduct = await this.productsRepository.save(product);
-    await this.clearProductsCache();
-    return updatedProduct;
+    return this.productsRepository.save(product);
   }
 
   async remove(id: string) {
     const product = await this.findOne(id);
-    await this.productsRepository.remove(product);
-    await this.clearProductsCache();
+    return this.productsRepository.remove(product);
   }
 }

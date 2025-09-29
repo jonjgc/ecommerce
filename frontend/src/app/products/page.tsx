@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Layout } from '@/components/Layout';
 import { Button } from '@/components/Button';
@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { api } from '@/services/api';
 import { IProduct } from '@/types/product';
 import toast from 'react-hot-toast';
+import { Pagination } from '@/components/Pagination';
 import * as S from './styles';
 
 export default function ProductsPage() {
@@ -18,24 +19,35 @@ export default function ProductsPage() {
 
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<IProduct | null>(null);
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
 
-  async function fetchProducts() {
+  const fetchProducts = useCallback(async () => {
+    setLoading(true);
     try {
-      const response = await api.get('/products');
-      setProducts(response.data);
+      const response = await api.get('/products', {
+        params: {
+          page: currentPage,
+          limit: 10,
+        },
+      });
+      setProducts(response.data.data);
+      setTotalPages(response.data.meta.totalPages);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error('Falha ao buscar produtos.');
     } finally {
       setLoading(false);
     }
-  }
+  }, [currentPage]);
 
   useEffect(() => {
     if (!isAuthenticated || !user?.isAdmin) {
@@ -44,7 +56,7 @@ export default function ProductsPage() {
       return;
     }
     fetchProducts();
-  }, [isAuthenticated, user, router]);
+  }, [isAuthenticated, user, router, fetchProducts]);
 
   const openCreateModal = () => {
     setEditingProduct(null);
@@ -62,6 +74,19 @@ export default function ProductsPage() {
     setPrice(product.price);
     setStock(product.stock);
     setIsModalOpen(true);
+  };
+
+  const handleDeleteProduct = async (productId: string) => {
+    if (window.confirm('Tem certeza que deseja excluir este produto?')) {
+      try {
+        await api.delete(`/products/${productId}`);
+        toast.success('Produto excluído com sucesso!');
+        fetchProducts();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
+        toast.error('Falha ao excluir o produto.');
+      }
+    }
   };
 
   const handleFormSubmit = async (event: FormEvent) => {
@@ -84,20 +109,7 @@ export default function ProductsPage() {
     }
   };
 
-  const handleDeleteProduct = async (productId: string) => {
-    if (window.confirm('Tem certeza que deseja excluir este produto?')) {
-      try {
-        await api.delete(`/products/${productId}`);
-        toast.success('Produto excluído com sucesso!');
-        fetchProducts(); // Re-busca os produtos
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (error) {
-        toast.error('Falha ao excluir o produto.');
-      }
-    }
-  };
-
-  if (loading) return <Layout><p>Carregando...</p></Layout>;
+  if (loading && products.length === 0) return <Layout><p>Carregando...</p></Layout>;
 
   return (
     <Layout>
@@ -109,20 +121,15 @@ export default function ProductsPage() {
 
         <S.ProductTable>
           <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Preço</th>
-              <th>Estoque</th>
-              <th>Ações</th>
-            </tr>
+            {/* ... */}
           </thead>
           <tbody>
             {products.map((product) => (
               <tr key={product.id}>
-                <td data-label>{product.name}</td>
-                <td data-label>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}</td>
-                <td data-label>{product.stock}</td>
-                <td data-label>
+                <td data-label="Nome">{product.name}</td>
+                <td data-label="Preço">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}</td>
+                <td data-label="Estoque">{product.stock}</td>
+                <td data-label="Ações">
                   <S.ActionButton onClick={() => openEditModal(product)}>✏️</S.ActionButton>
                   <S.ActionButton onClick={() => handleDeleteProduct(product.id)}>🗑️</S.ActionButton>
                 </td>
@@ -130,6 +137,12 @@ export default function ProductsPage() {
             ))}
           </tbody>
         </S.ProductTable>
+        
+        <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+        />
       </S.Container>
 
       <Modal

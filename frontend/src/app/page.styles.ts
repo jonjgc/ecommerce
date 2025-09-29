@@ -19,3 +19,8 @@ export const PageHeader = styled.div`
   align-items: center;
   margin-bottom: ${({ theme }) => theme.spacing.large};
 `;
+
+export const SearchContainer = styled.div`
+  margin-bottom: ${({ theme }) => theme.spacing.large};
+  max-width: 500px;
+`;

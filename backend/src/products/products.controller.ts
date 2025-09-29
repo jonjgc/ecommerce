@@ -8,18 +8,20 @@ import {
   Delete,
   UseGuards,
   ParseUUIDPipe,
+  Query,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminGuard } from 'src/auth/guards/admin.guard';
+import { QueryProductDto } from 'src/auth/dto/query-product.dto';
 import {
   ApiTags,
   ApiOperation,
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @ApiTags('Products')
 @Controller('products')
@@ -32,20 +34,20 @@ export class ProductsController {
   @ApiOperation({ summary: 'Cria um novo produto (Apenas Admins)' })
   @ApiResponse({ status: 201, description: 'Produto criado com sucesso.' })
   @ApiResponse({ status: 403, description: 'Acesso negado (não é admin).' })
-  @UseGuards(AuthGuard('jwt'), AdminGuard)
-  @Post()
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+  create(@Body() CreateProductDto: CreateProductDto) {
+    return this.productsService.create(CreateProductDto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Lista todos os produtos' })
+  @ApiOperation({
+    summary: 'Lista todos os produtos (com paginação e busca por nome)',
+  })
   @ApiResponse({
     status: 200,
     description: 'Lista de produtos retornada com sucesso.',
   })
-  findAll() {
-    return this.productsService.findAll();
+  findAll(@Query() query: QueryProductDto) {
+    return this.productsService.findAll(query);
   }
 
   @Get(':id')

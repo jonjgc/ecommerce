@@ -22,7 +22,7 @@ import { CacheModule } from '@nestjs/cache-manager';
         });
         return {
           store: () => store,
-          ttl: 3600,
+          ttl: 20000,
         };
       },
     }),

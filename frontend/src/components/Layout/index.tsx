@@ -1,5 +1,6 @@
 'use client';
 
+import { Header } from '../Header';
 import * as S from './styles';
 
 type LayoutProps = {
@@ -9,6 +10,7 @@ type LayoutProps = {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <S.Wrapper>
+      <Header />
       <S.Main>{children}</S.Main>
     </S.Wrapper>
   );

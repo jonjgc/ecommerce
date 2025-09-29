@@ -2,6 +2,7 @@
 
 import { IProduct } from '@/types/product';
 import { Button } from '../Button';
+import { useCart } from '@/contexts/CartContext';
 import * as S from './styles';
 
 interface ProductCardProps {
@@ -9,6 +10,8 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
+  const { addToCart } = useCart();
+
   const formattedPrice = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
@@ -20,7 +23,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       <S.Description>{product.description}</S.Description>
       <S.Price>{formattedPrice}</S.Price>
       <S.Stock>Estoque: {product.stock}</S.Stock>
-      <Button>Adicionar ao Carrinho</Button>
+      <Button onClick={() => addToCart(product)}>Adicionar ao Carrinho</Button>
     </S.Wrapper>
   );
 };

@@ -116,7 +116,7 @@ export default function ProductsPage() {
       <S.Container>
         <h1>Gerenciar Produtos</h1>
         <S.TopActions>
-          <Button onClick={openCreateModal}>Adicionar Novo Produto</Button>
+          <Button onClick={openCreateModal} fullWidth={false}>Adicionar Novo Produto</Button>
         </S.TopActions>
 
         <S.ProductTable>

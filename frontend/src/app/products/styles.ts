@@ -11,6 +11,10 @@ export const TopActions = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: ${({ theme }) => theme.spacing.large};
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 export const ProductTable = styled.table`
@@ -46,7 +50,7 @@ export const ProductTable = styled.table`
 
     td {
       display: block;
-      text-align: right; /* Alinha o valor à direita */
+      text-align: right;
       position: relative;
       padding-left: 50%;
       border: none;

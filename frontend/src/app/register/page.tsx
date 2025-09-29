@@ -43,7 +43,7 @@ export default function RegisterPage() {
         password,
       });
 
-      toast.success('Cadastro realizado com sucesso! Faça o login.');
+      toast.success('Cadastro realizado com sucesso! verifique seu email.');
       router.push('/login');
 
     } catch (error) {

@@ -3,20 +3,32 @@
 import { ThemeProvider } from 'styled-components'
 import { GlobalStyles } from '@/styles/global'
 import { AuthProvider } from '@/contexts/AuthContext'
-import theme from '@/styles/theme'
 import { Toaster } from 'react-hot-toast'
 import { CartProvider } from '@/contexts/CartContext'
+import { lightTheme, darkTheme } from '@/styles/theme'
+import { ThemeManagerProvider, useThemeManager } from '@/contexts/ThemeManagerContext';
+
+const AppThemeProvider = ({ children }: { children: React.ReactNode }) => {
+  const { themeMode } = useThemeManager();
+  return (
+    <ThemeProvider theme={themeMode === 'light' ? lightTheme : darkTheme}>
+      <Toaster position="top-center" />
+      <GlobalStyles />
+      {children}
+    </ThemeProvider>
+  );
+};
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeManagerProvider>
       <AuthProvider>
         <CartProvider>
-          <Toaster position="top-center" />
-          <GlobalStyles />
-          {children}
+          <AppThemeProvider>
+            {children}
+          </AppThemeProvider>
         </CartProvider>
       </AuthProvider>
-    </ThemeProvider>
+    </ThemeManagerProvider>
   )
 }

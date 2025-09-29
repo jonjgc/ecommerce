@@ -1,15 +1,4 @@
-// src/styles/theme.ts
-
-const theme = {
-  colors: {
-    primary: '#3498db',
-    secondary: '#2ecc71',
-    background: '#f4f6f8',
-    text: '#333333',
-    white: '#ffffff',
-    error: '#e74c3c',
-    gray: '#bdc3c7',
-  },
+const baseTheme = {
   spacing: {
     small: '8px',
     medium: '16px',
@@ -23,4 +12,28 @@ const theme = {
   },
 };
 
-export default theme;
+export const lightTheme = {
+  ...baseTheme,
+  colors: {
+    primary: '#3498db',
+    secondary: '#2ecc71',
+    background: '#f4f6f8',
+    white: '#ffffff',
+    text: '#333333',
+    error: '#e74c3c',
+    gray: '#bdc3c7',
+  },
+};
+
+export const darkTheme = {
+  ...baseTheme,
+  colors: {
+    primary: '#3498db',
+    secondary: '#2ecc71',
+    background: '#121212',
+    white: '#1e1e1e',
+    text: '#f4f6f8',
+    error: '#e74c3c',
+    gray: '#555',
+  },
+};

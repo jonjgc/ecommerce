@@ -23,7 +23,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
       <S.SidebarContainer $isOpen={isOpen}>
         <S.Header>
           <h2>Seu Carrinho</h2>
-          <button onClick={onClose}>&times;</button>
+          <S.CloseButton onClick={onClose}>&times;</S.CloseButton>
         </S.Header>
 
         <S.CartItemsList>
@@ -43,7 +43,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                     min="1"
                     onChange={(e) => updateItemQuantity(item.id, Number(e.target.value))}
                   />
-                  <button onClick={() => removeFromCart(item.id)}>🗑️</button>
+                  <S.RemoveButton onClick={() => removeFromCart(item.id)}>🗑️</S.RemoveButton>
                 </S.ItemActions>
               </S.CartItem>
             ))

@@ -119,10 +119,10 @@ export default function ProductsPage() {
           <tbody>
             {products.map((product) => (
               <tr key={product.id}>
-                <td>{product.name}</td>
-                <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}</td>
-                <td>{product.stock}</td>
-                <td>
+                <td data-label>{product.name}</td>
+                <td data-label>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.price)}</td>
+                <td data-label>{product.stock}</td>
+                <td data-label>
                   <S.ActionButton onClick={() => openEditModal(product)}>✏️</S.ActionButton>
                   <S.ActionButton onClick={() => handleDeleteProduct(product.id)}>🗑️</S.ActionButton>
                 </td>

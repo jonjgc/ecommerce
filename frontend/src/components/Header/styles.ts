@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+export { styled };
 
 export const Wrapper = styled.header`
   background-color: ${({ theme }) => theme.colors.white};
@@ -35,4 +36,10 @@ export const CartBadge = styled.span`
   justify-content: center;
   font-size: 0.75rem;
   font-weight: bold;
+`;
+
+export const RightActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing.medium};
 `;

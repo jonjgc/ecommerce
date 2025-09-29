@@ -31,6 +31,43 @@ export const ProductTable = styled.table`
     width: 150px;
     text-align: center;
   }
+
+  @media (max-width: 768px) {
+    thead {
+      display: none;
+    }
+
+    tr {
+      display: block;
+      margin-bottom: ${({ theme }) => theme.spacing.large};
+      border: 1px solid ${({ theme }) => theme.colors.gray};
+      border-radius: 4px;
+    }
+
+    td {
+      display: block;
+      text-align: right; /* Alinha o valor à direita */
+      position: relative;
+      padding-left: 50%;
+      border: none;
+      border-bottom: 1px solid #eee;
+
+      &:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: calc(50% - 20px);
+        text-align: left;
+        font-weight: bold;
+      }
+
+      &:last-child {
+        width: 100%;
+        text-align: center;
+        border-bottom: none;
+      }
+    }
+  };
 `;
 
 export const ActionButton = styled.button`

@@ -63,9 +63,11 @@ export const ItemActions = styled.div`
   align-items: center;
 
   input {
-    width: 40px;
+    width: 50px;
     text-align: center;
     margin: 0 10px;
+    padding: 5px;
+    font-size: 1rem;
   }
 `;
 
@@ -80,4 +82,21 @@ export const Total = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: ${({ theme }) => theme.spacing.medium};
+`;
+
+export const CloseButton = styled.button`
+  background: transparent;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.text};
+`;
+
+export const RemoveButton = styled.button`
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 5px;
+  line-height: 1; /* Alinha melhor o emoji */
 `;

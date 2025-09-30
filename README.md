@@ -58,27 +58,47 @@ cd <backend>
 
 *Em um terminal:*
 ```bash
-# 1. Navegue até a pasta do backend
-cd backend
+1.  **Clone o repositório:**
+    ```bash
+    git clone <url-do-seu-repositorio>
+    ```
 
-# 2. Instale as dependências
-npm install
+2.  **Navegue até a pasta do backend:**
+    ```bash
+    cd loja-online/backend
+    ```
 
-# 3. Configure as variáveis de ambiente
-# Copie o arquivo de exemplo (use 'copy' no Windows)
-cp .env.example .env
+3.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
 
-# 4. Abra o arquivo .env e preencha com suas credenciais locais
-# do PostgreSQL, Redis e crie um segredo para o JWT.
+4.  **Configure as variáveis de ambiente:**
+    -   Renomeie o arquivo `.env.example` para apenas `.env`.
+    -   Abra o arquivo `.env` e preencha com suas credenciais do PostgreSQL, um segredo para o JWT, as informações do Redis e as credenciais do Mailtrap.
 
-# 5. Inicie o Redis via Docker (garanta que o Docker Desktop esteja rodando)
-docker run --name ux-redis -p 6379:6379 -d redis
+5.  **Inicie os serviços (Redis):**
+    -   O Redis é necessário para a funcionalidade de cache. Certifique-se de que o Docker Desktop esteja rodando e execute o comando abaixo:
+        ```bash
+        docker run --name ux-redis -p 6379:6379 -d redis
+        ```
+    -   *Nota: Certifique-se também de que seu servidor PostgreSQL esteja em execução.*
 
-# 6. Rode as migrations para criar as tabelas no banco de dados
-npm run migration:run
+6.  **Execute as migrations do banco de dados:**
+    ```bash
+    npm run migration:run
+    ```
 
-# 7. Inicie o servidor do backend
-npm run start:dev
+7.  **Crie um usuário administrador para testes:**
+    -   Este comando irá popular o banco de dados com uma conta de administrador pronta para uso.
+    ```bash
+    npm run seed
+    ```
+
+8.  **Inicie a aplicação:**
+    ```bash
+    npm run start:dev
+    ```
 ```
 **Backend pronto!** O servidor da API estará rodando em `http://localhost:3000`.
 

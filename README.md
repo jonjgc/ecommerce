@@ -136,6 +136,5 @@ Lá você pode visualizar e testar todos os endpoints.
 ### Testando a Aplicação Completa
 
 1.  Acesse `http://localhost:3001/register` para criar uma nova conta.
-2.  **Importante:** Após o cadastro, verifique o terminal do **backend**. Um link de confirmação de conta será exibido. Copie e cole esse link no navegador para ativar sua conta.
-3.  Acesse `http://localhost:3001/login` para entrar na aplicação.
-4.  Para testar as funcionalidades de administrador (como gerenciar produtos), você precisará alterar manualmente o campo `isAdmin` do seu usuário para `true` diretamente no banco de dados.
+2.  Acesse `http://localhost:3001/login` para entrar na aplicação.
+3.  Para testar as funcionalidades de administrador (como gerenciar produtos), você precisará alterar manualmente o campo `isAdmin` do seu usuário para `true` diretamente no banco de dados.

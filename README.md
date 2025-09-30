@@ -20,10 +20,10 @@ O projeto consiste em uma aplicação web completa. O **backend**, construído c
 ## Tecnologias Utilizadas
 
 ### Backend
--   **NestJScom **TypeScript**
+-   **NestJS com **TypeScript**
 -   **PostgreSQL** como banco de dados relacional
 -   **TypeORM** para o mapeamento objeto-relacional e migrations
--   **Redis/** para cache de dados
+-   **Redis** para cache de dados
 -   **Swagger** para documentação interativa da API
 -   **Passport.js** para estratégias de autenticação (JWT)
 
@@ -40,9 +40,9 @@ O projeto consiste em uma aplicação web completa. O **backend**, construído c
 
 Antes de começar, garanta que você tenha os seguintes serviços instalados e rodando na sua máquina:
 -   Node.js (v16 ou superior)
--   [NPM]
--   [PostgreSQL]
--   [Docker] (para rodar o Redis facilmente)
+-   NPM
+-   PostgreSQL
+-   Docker (para rodar o Redis facilmente)
 
 ### Passo a Passo
 
@@ -75,10 +75,12 @@ cd <backend>
 
 4.  **Configure as variáveis de ambiente:**
     -   Renomeie o arquivo `.env.example` para apenas `.env`.
-    -   Abra o arquivo `.env` e preencha com suas credenciais do PostgreSQL, um segredo para o JWT, as informações do Redis e as credenciais do Mailtrap.
+    -   Abra o arquivo `.env` e preencha com suas credenciais do PostgreSQL, um segredo para o JWT, as informações do Redis
+        e as credenciais do Mailtrap.
 
 5.  **Inicie os serviços (Redis):**
-    -   O Redis é necessário para a funcionalidade de cache. Certifique-se de que o Docker Desktop esteja rodando e execute o comando abaixo:
+    -   O Redis é necessário para a funcionalidade de cache. Certifique-se de que o Docker Desktop esteja rodando e
+        execute o comando abaixo:
         ```bash
         docker run --name ux-redis -p 6379:6379 -d redis
         ```

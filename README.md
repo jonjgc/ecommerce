@@ -135,4 +135,4 @@ Lá você pode visualizar e testar todos os endpoints.
 
 1.  Acesse `http://localhost:3001/register` para criar uma nova conta.
 2.  Acesse `http://localhost:3001/login` para entrar na aplicação.
-3.  Para testar as funcionalidades de administrador (como gerenciar produtos), use o login de usuário administrador gerado pelo seed feito no passo 7 na configuração do backend.
+3.  Para testar as funcionalidades de administrador (como gerenciar produtos), use o login de usuário administrador gerado pelo seed feito no passo 6 na configuração do backend.

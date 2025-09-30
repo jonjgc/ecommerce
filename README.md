@@ -75,11 +75,12 @@ cd <backend>
 
 4.  **Configure as variáveis de ambiente:**
     -   Renomeie o arquivo `.env.example` para apenas `.env`.
-    -   Abra o arquivo `.env` e preencha com suas credenciais do PostgreSQL, um segredo para o JWT, as informações do Redis
-        e as credenciais do Mailtrap.
+    -   Abra o arquivo `.env` e preencha com suas credenciais do PostgreSQL, um segredo para o JWT,
+     as informações do Redis, e as credenciais do Mailtrap.
 
 5.  **Inicie os serviços (Redis):**
-    -   O Redis é necessário para a funcionalidade de cache. Certifique-se de que o Docker Desktop esteja rodando e
+    -   O Redis é necessário para a funcionalidade de cache. Certifique-se de que o Docker Desktop
+     esteja rodando
         execute o comando abaixo:
         ```bash
         docker run --name ux-redis -p 6379:6379 -d redis

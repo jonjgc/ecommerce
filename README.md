@@ -50,8 +50,8 @@ A instalação é dividida em duas partes: primeiro o **backend**, depois o **fr
 
 #### 1. Clonar o Repositório
 ```bash
-git clone <url-do-seu-repositorio>
-cd <nome-do-repositorio>
+git clone <https://github.com/jonjgc/ecommerce.git>
+cd <backend>
 ```
 
 #### 2. Configurar e Iniciar o Backend

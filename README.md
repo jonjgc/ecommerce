@@ -58,27 +58,23 @@ cd <backend>
 
 *Em um terminal:*
 ```bash
-1.  **Clone o repositório:**
+
+1.  **Navegue até a pasta do backend:**
     ```bash
-    git clone <url-do-seu-repositorio>
+    cd ecommerce/backend
     ```
 
-2.  **Navegue até a pasta do backend:**
-    ```bash
-    cd loja-online/backend
-    ```
-
-3.  **Instale as dependências:**
+2.  **Instale as dependências:**
     ```bash
     npm install
     ```
 
-4.  **Configure as variáveis de ambiente:**
+3.  **Configure as variáveis de ambiente:**
     -   Renomeie o arquivo `.env.example` para apenas `.env`.
     -   Abra o arquivo `.env` e preencha com suas credenciais do PostgreSQL, um segredo para o JWT,
      as informações do Redis, e as credenciais do Mailtrap.
 
-5.  **Inicie os serviços (Redis):**
+4.  **Inicie os serviços (Redis):**
     -   O Redis é necessário para a funcionalidade de cache. Certifique-se de que o Docker Desktop
      esteja rodando.
      
@@ -88,18 +84,18 @@ cd <backend>
         ```
     -   *Nota: Certifique-se também de que seu servidor PostgreSQL esteja em execução.*
 
-6.  **Execute as migrations do banco de dados:**
+5.  **Execute as migrations do banco de dados:**
     ```bash
     npm run migration:run
     ```
 
-7.  **Popule o banco com dados de teste:**
+6.  **Popule o banco com dados de teste:**
     -   Este comando irá criar um usuário administrador e alguns produtos de exemplo.
     ```bash
     npm run seed
     ```       
 
-8.  **Inicie a aplicação:**
+7.  **Inicie a aplicação:**
     ```bash
     npm run start:dev
     ```

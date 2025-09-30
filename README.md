@@ -80,7 +80,8 @@ cd <backend>
 
 5.  **Inicie os serviços (Redis):**
     -   O Redis é necessário para a funcionalidade de cache. Certifique-se de que o Docker Desktop
-     esteja rodando
+     esteja rodando.
+     
         execute o comando abaixo:
         ```bash
         docker run --name ux-redis -p 6379:6379 -d redis

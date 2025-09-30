@@ -21,7 +21,9 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d ./data-source.ts",
     "migration:generate": "npm run typeorm -- migration:generate",
     "migration:run": "npm run typeorm -- migration:run",
-    "seed": "ts-node src/db/seeds/admin-user.seed.ts"
+    "seed:admin": "ts-node src/db/seeds/admin-user.seed.ts",
+    "seed:products": "ts-node src/db/seeds/product.seed.ts",
+    "seed": "npm run seed:admin && npm run seed:products"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^2.0.2",

@@ -93,11 +93,11 @@ cd <backend>
     npm run migration:run
     ```
 
-7.  **Crie um usuário administrador para testes:**
-    -   Este comando irá popular o banco de dados com uma conta de administrador pronta para uso.
+7.  **Popule o banco com dados de teste:**
+    -   Este comando irá criar um usuário administrador e alguns produtos de exemplo.
     ```bash
     npm run seed
-    ```
+    ```       
 
 8.  **Inicie a aplicação:**
     ```bash
